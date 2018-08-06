@@ -45,7 +45,6 @@ namespace UI.DOS
         {
             if (minhaconexao.State == ConnectionState.Open)
             minhaconexao.Close();
-            
         }
     }
 }

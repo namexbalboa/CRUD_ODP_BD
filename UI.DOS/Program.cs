@@ -10,7 +10,10 @@ namespace UI.DOS
         static void Main(string[] args)
         {
 
+            var appAluno = new AlunoAplicacao();
+
             /**************************CONSOLE**********************************/
+
             Console.Write("Digite o Nome do Aluno: ");
             string nome = Console.ReadLine();
 
@@ -21,6 +24,9 @@ namespace UI.DOS
             string dataNascimento = Console.ReadLine();
 
             /**************************CONSOLE**********************************/
+
+
+
 
             /***************************CRUD CLASSICO***************************/
 
@@ -46,28 +52,36 @@ namespace UI.DOS
 
             /***************************CRUD CLASSICO***************************/
 
-            /***************************CRUD REFERENCIADO*********************/
-            var contexto = new Contexto();
 
-            var aluno = new Aluno()
+
+
+            /***************************CRUD REFERENCIADO*********************/
+
+            /*INSERT OU UPDATE*/
+
+            var aluno1 = new Aluno()
             {
                 Nome = nome,
                 Mae = mae,
                 DataNascimento = DateTime.Parse(dataNascimento)
             };
+            //aluno1.Id = 0;
+            appAluno.Salvar(aluno1);
 
-            aluno.Id = 10;
+            /*DELETE*/
+            //new AlunoAplicacao().Excluir(9);
 
-            new AlunoAplicacao().Salvar(aluno);
-            
-            string strQuerySelect = "SELECT * FROM ALUNO";
-            SqlDataReader dados = contexto.ExecutaComandoComRetorno(strQuerySelect);
+            /*READ*/
+            var dados = appAluno.ListarTodos();
 
             /***************************CRUD REFERENCIADO*********************/
 
-            while (dados.Read())
+
+
+            /*ENCAPSULADO*/
+            foreach (var aluno in dados)
             {
-                Console.WriteLine("Id:{0}, Nome:{1}, Mae:{2}, DataNascimento:{3}", dados["AlunoId"], dados["Nome"], dados["Mae"], dados["DataNascimento"]);
+                Console.WriteLine("Id:{0}, Nome:{1}, Mae:{2}, DataNascimento:{3}", aluno.Id, aluno.Nome, aluno.Mae, aluno.DataNascimento);
             }
 
         }
